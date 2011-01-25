@@ -34,7 +34,7 @@ namespace System
 	[Serializable]
 	[CLSCompliant (false)]
 	[System.Runtime.InteropServices.ComVisible (true)]
-	public struct UInt16 : IFormattable, IConvertible, IComparable, IComparable<UInt16>, IEquatable <UInt16>
+	public struct UInt16 : IFormattable, IConvertible, IComparable, IComparable<UInt16>, IEquatable <UInt16>, IArithmetic <UInt16>
 	{
 		public const ushort MaxValue = 0xffff;
 		public const ushort MinValue = 0;
@@ -226,6 +226,85 @@ namespace System
 		ulong IConvertible.ToUInt64 (IFormatProvider provider)
 		{
 			return System.Convert.ToUInt64 (m_value);
+		}
+		
+		UInt16 IArithmetic<UInt16>.Add (UInt16 addend)
+		{
+			return (UInt16)(m_value + addend);
+		}
+		
+		UInt16 IArithmetic<UInt16>.Subtract (UInt16 subtrahend)
+		{
+			return (UInt16)(m_value - subtrahend);
+		}
+		
+		UInt16 IArithmetic<UInt16>.Multiply (UInt16 multiplier)
+		{
+			return (UInt16)(m_value * multiplier);
+		}
+		
+		UInt16 IArithmetic<UInt16>.Divide (UInt16 divisor)
+		{
+			return (UInt16)(m_value / divisor);
+		}
+		
+		UInt16 IArithmetic<UInt16>.Negate ()
+		{
+			return m_value;
+		}
+		
+		UInt16 IArithmetic<UInt16>.Max (UInt16 other)
+		{
+			return (UInt16) Math.Max (m_value, other);
+		}
+		
+		UInt16 IArithmetic<UInt16>.Min (UInt16 other)
+		{
+			return (UInt16) Math.Min (m_value, other);
+		}
+		
+		UInt16 IArithmetic<UInt16>.Sqrt ()
+		{
+			return (UInt16) Math.Sqrt (m_value);
+		}
+		
+		Nullable<ArithmeticSign> IArithmetic<UInt16>.Sign {
+			get {
+				if (m_value > 0)
+					return ArithmeticSign.Positive;
+				else
+					return ArithmeticSign.Zero;
+			}
+		}
+		
+		UInt16 IArithmetic<UInt16>.MaxValue {
+			get {
+				return UInt16.MaxValue;
+			}
+		}
+		
+		UInt16 IArithmetic<UInt16>.MinValue {
+			get {
+				return UInt16.MinValue;
+			}
+		}
+		
+		UInt16 IArithmetic<UInt16>.Zero {
+			get {
+				return (UInt16) 0;
+			}
+		}
+		
+		UInt16 IArithmetic<UInt16>.One {
+			get {
+				return (UInt16) 1;
+			}
+		}
+		
+		Boolean IArithmetic<UInt16>.IsUnsigned {
+			get {
+				return true;
+			}
 		}
 	}
 }

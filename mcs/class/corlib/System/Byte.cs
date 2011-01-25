@@ -36,7 +36,7 @@ namespace System
 {
 	[Serializable]
 	[System.Runtime.InteropServices.ComVisible (true)]
-	public struct Byte : IFormattable, IConvertible, IComparable, IComparable<Byte>, IEquatable <Byte>
+	public struct Byte : IFormattable, IConvertible, IComparable, IComparable<Byte>, IEquatable <Byte>, IArithmetic <Byte>
 	{
 		public const byte MinValue = 0;
 		public const byte MaxValue = 255;
@@ -234,6 +234,85 @@ namespace System
 		ulong IConvertible.ToUInt64 (IFormatProvider provider)
 		{
 			return System.Convert.ToUInt64 (m_value);
+		}
+		
+		Byte IArithmetic<Byte>.Add (Byte addend)
+		{
+			return (Byte)(m_value + addend);
+		}
+		
+		Byte IArithmetic<Byte>.Subtract (Byte subtrahend)
+		{
+			return (Byte)(m_value - subtrahend);
+		}
+		
+		Byte IArithmetic<Byte>.Multiply (Byte multiplier)
+		{
+			return (Byte)(m_value * multiplier);
+		}
+		
+		Byte IArithmetic<Byte>.Divide (Byte divisor)
+		{
+			return (Byte)(m_value / divisor);
+		}
+		
+		Byte IArithmetic<Byte>.Negate ()
+		{
+			return m_value;
+		}
+		
+		Byte IArithmetic<Byte>.Max (Byte other)
+		{
+			return (Byte) Math.Max (m_value, other);
+		}
+		
+		Byte IArithmetic<Byte>.Min (Byte other)
+		{
+			return (Byte) Math.Min (m_value, other);
+		}
+		
+		Byte IArithmetic<Byte>.Sqrt ()
+		{
+			return (Byte) Math.Sqrt (m_value);
+		}
+		
+		Nullable<ArithmeticSign> IArithmetic<Byte>.Sign {
+			get {
+				if (m_value > 0)
+					return ArithmeticSign.Positive;
+				else
+					return ArithmeticSign.Zero;
+			}
+		}
+		
+		Byte IArithmetic<Byte>.MaxValue {
+			get {
+				return Byte.MaxValue;
+			}
+		}
+		
+		Byte IArithmetic<Byte>.MinValue {
+			get {
+				return Byte.MinValue;
+			}
+		}
+		
+		Byte IArithmetic<Byte>.Zero {
+			get {
+				return (Byte) 0;
+			}
+		}
+		
+		Byte IArithmetic<Byte>.One {
+			get {
+				return (Byte) 1;
+			}
+		}
+		
+		Boolean IArithmetic<Byte>.IsUnsigned {
+			get {
+				return true;
+			}
 		}
 	}
 }

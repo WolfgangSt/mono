@@ -35,7 +35,7 @@ namespace System {
 	
 	[Serializable]
 	[System.Runtime.InteropServices.ComVisible (true)]
-	public struct Int64 : IFormattable, IConvertible, IComparable, IComparable<Int64>, IEquatable <Int64>
+	public struct Int64 : IFormattable, IConvertible, IComparable, IComparable<Int64>, IEquatable <Int64>, IArithmetic <Int64>
 	{
 
 		public const long MaxValue = 0x7fffffffffffffff;
@@ -588,6 +588,87 @@ namespace System {
 		ulong IConvertible.ToUInt64 (IFormatProvider provider)
 		{
 			return System.Convert.ToUInt64 (m_value);
+		}
+		
+		Int64 IArithmetic<Int64>.Add (Int64 addend)
+		{
+			return m_value + addend;
+		}
+		
+		Int64 IArithmetic<Int64>.Subtract (Int64 subtrahend)
+		{
+			return m_value - subtrahend;
+		}
+		
+		Int64 IArithmetic<Int64>.Multiply (Int64 multiplier)
+		{
+			return m_value * multiplier;
+		}
+		
+		Int64 IArithmetic<Int64>.Divide (Int64 divisor)
+		{
+			return m_value / divisor;
+		}
+		
+		Int64 IArithmetic<Int64>.Negate ()
+		{
+			return -m_value;
+		}
+		
+		Int64 IArithmetic<Int64>.Max (Int64 other)
+		{
+			return (Int64) Math.Max (m_value, other);
+		}
+		
+		Int64 IArithmetic<Int64>.Min (Int64 other)
+		{
+			return (Int64) Math.Min (m_value, other);
+		}
+		
+		Int64 IArithmetic<Int64>.Sqrt ()
+		{
+			return (Int64) Math.Sqrt (m_value);
+		}
+		
+		Nullable<ArithmeticSign> IArithmetic<Int64>.Sign {
+			get {
+				if (m_value > 0)
+					return ArithmeticSign.Positive;
+				else if (m_value == 0)
+					return ArithmeticSign.Zero;
+				else
+					return ArithmeticSign.Negative;
+			}
+		}
+		
+		Int64 IArithmetic<Int64>.MaxValue {
+			get {
+				return Int64.MaxValue;
+			}
+		}
+		
+		Int64 IArithmetic<Int64>.MinValue {
+			get {
+				return Int64.MinValue;
+			}
+		}
+		
+		Int64 IArithmetic<Int64>.Zero {
+			get {
+				return (Int64) 0;
+			}
+		}
+		
+		Int64 IArithmetic<Int64>.One {
+			get {
+				return (Int64) 1;
+			}
+		}
+		
+		Boolean IArithmetic<Int64>.IsUnsigned {
+			get {
+				return false;
+			}
 		}
 	}
 }

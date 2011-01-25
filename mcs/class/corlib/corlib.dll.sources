@@ -159,6 +159,7 @@ System/GCCollectionMode.cs
 System/GCNotificationStatus.cs
 System/Guid.cs
 System/IAppDomainSetup.cs
+System/IArithmetic.cs
 System/IAsyncResult.cs
 System/IObservable.cs
 System/IObserver.cs

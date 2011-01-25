@@ -53,7 +53,7 @@ namespace System
 	/// </summary>
 	[Serializable]
 	[System.Runtime.InteropServices.ComVisible (true)]
-	public struct Decimal: IFormattable, IConvertible, IComparable, IComparable<Decimal>, IEquatable <Decimal>
+	public struct Decimal: IFormattable, IConvertible, IComparable, IComparable<Decimal>, IEquatable <Decimal>, IFloatingPointArithmetic <Decimal>
 #if NET_4_0
 		, IDeserializationCallback
 #endif
@@ -1453,5 +1453,196 @@ namespace System
 		private static extern int decimalCompare (ref Decimal d1, ref Decimal d2);
 
 #endif
+		
+		Decimal IArithmetic<Decimal>.Add (Decimal addend)
+		{
+			return this + addend;
+		}
+		
+		Decimal IArithmetic<Decimal>.Subtract (Decimal subtrahend)
+		{
+			return this - subtrahend;
+		}
+		
+		Decimal IArithmetic<Decimal>.Multiply (Decimal multiplier)
+		{
+			return this * multiplier;
+		}
+		
+		Decimal IArithmetic<Decimal>.Divide (Decimal divisor)
+		{
+			return this / divisor;
+		}
+		
+		Decimal IArithmetic<Decimal>.Negate ()
+		{
+			return -this;
+		}
+		
+		Decimal IArithmetic<Decimal>.Max (Decimal other)
+		{
+			return Math.Max (this, other);
+		}
+		
+		Decimal IArithmetic<Decimal>.Min (Decimal other)
+		{
+			return Math.Min (this, other);
+		}
+		
+		Decimal IArithmetic<Decimal>.Sqrt ()
+		{
+			return new Decimal (Math.Sqrt (ToDouble (this)));
+		}
+		
+		Nullable<ArithmeticSign> IArithmetic<Decimal>.Sign {
+			get {
+				// Decimal cannot be NaN
+				if (this > Decimal.Zero)
+					return ArithmeticSign.Positive;
+				else if (this == Decimal.Zero)
+					return ArithmeticSign.Zero;
+				else
+					return ArithmeticSign.Negative;
+			}
+		}
+		
+		Decimal IArithmetic<Decimal>.MaxValue {
+			get {
+				return Decimal.MaxValue;
+			}
+		}
+		
+		Decimal IArithmetic<Decimal>.MinValue {
+			get {
+				return Decimal.MinValue;
+			}
+		}
+		
+		Decimal IArithmetic<Decimal>.Zero {
+			get {
+				return Decimal.Zero;
+			}
+		}
+		
+		Decimal IArithmetic<Decimal>.One {
+			get {
+				return Decimal.One;
+			}
+		}
+		
+		Boolean IArithmetic<Decimal>.IsUnsigned {
+			get {
+				return false;
+			}
+		}
+		
+		Boolean IFloatingPointArithmetic<Decimal>.IsNaN {
+			get {
+				// Decimal cannot be NaN
+				return false;
+			}
+		}
+		
+		Nullable<FloatingPointInfinity> IFloatingPointArithmetic<Decimal>.Infinity {
+			get {
+				// Decimal does not know infinity
+				return null;
+			}
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Acos ()
+		{
+			return new Decimal (Math.Acos (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Asin ()
+		{
+			return new Decimal (Math.Asin (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Atan ()
+		{
+			return new Decimal (Math.Atan (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Atan2x (Decimal x)
+		{
+			return new Decimal (Math.Atan2 (ToDouble (this), ToDouble (x)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Atan2y (Decimal y)
+		{
+			return new Decimal (Math.Atan2 (ToDouble (y), ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Ceiling ()
+		{
+			return Math.Ceiling (this);
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Cos ()
+		{
+			return new Decimal (Math.Cos (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Cosh ()
+		{
+			return new Decimal (Math.Cosh (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Exp ()
+		{
+			return new Decimal (Math.Exp (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Floor ()
+		{
+			return Decimal.Floor (this);
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Log ()
+		{
+			return new Decimal (Math.Log (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Log10 ()
+		{
+			return new Decimal (Math.Log10 (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Pow (Decimal n)
+		{
+			return new Decimal (Math.Pow (ToDouble (this), ToDouble(n)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Round (int digits, MidpointRounding mode)
+		{
+			return Round (this, digits, mode);
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Sin ()
+		{
+			return new Decimal (Math.Sin (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Sinh ()
+		{
+			return new Decimal (Math.Sinh (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Tan ()
+		{
+			return new Decimal (Math.Tan (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Tanh ()
+		{
+			return new Decimal (Math.Tanh (ToDouble (this)));
+		}
+		
+		Decimal IFloatingPointArithmetic<Decimal>.Truncate ()
+		{
+			return Math.Truncate (this);
+		}
 	}
 }

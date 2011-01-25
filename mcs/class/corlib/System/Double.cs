@@ -40,7 +40,7 @@ namespace System {
 	
 	[Serializable]
 	[System.Runtime.InteropServices.ComVisible (true)]
-	public struct Double : IComparable, IFormattable, IConvertible, IComparable <double>, IEquatable <double>
+	public struct Double : IComparable, IFormattable, IConvertible, IComparable <double>, IEquatable <double>, IFloatingPointArithmetic <Double>
 	{
 		public const double Epsilon = 4.9406564584124650e-324;
 		public const double MaxValue =  1.7976931348623157e308;
@@ -630,6 +630,201 @@ namespace System {
 		ulong IConvertible.ToUInt64 (IFormatProvider provider)
 		{
 			return System.Convert.ToUInt64 (m_value);
+		}
+		
+		Double IArithmetic<Double>.Add (Double addend)
+		{
+			return m_value + addend;
+		}
+		
+		Double IArithmetic<Double>.Subtract (Double subtrahend)
+		{
+			return m_value - subtrahend;
+		}
+		
+		Double IArithmetic<Double>.Multiply (Double multiplier)
+		{
+			return m_value * multiplier;
+		}
+		
+		Double IArithmetic<Double>.Divide (Double divisor)
+		{
+			return m_value / divisor;
+		}
+		
+		Double IArithmetic<Double>.Negate ()
+		{
+			return -m_value;
+		}
+		
+		Double IArithmetic<Double>.Max (Double other)
+		{
+			return Math.Max (m_value, other);
+		}
+		
+		Double IArithmetic<Double>.Min (Double other)
+		{
+			return Math.Min (m_value, other);
+		}
+		
+		Double IArithmetic<Double>.Sqrt ()
+		{
+			return Math.Sqrt (m_value);
+		}
+		
+		Nullable<ArithmeticSign> IArithmetic<Double>.Sign {
+			get {
+				if (IsNaN (m_value))
+					return null;
+				else if (m_value > 0.0d)
+					return ArithmeticSign.Positive;
+				else if (m_value == 0.0d)
+					return ArithmeticSign.Zero;
+				else
+					return ArithmeticSign.Negative;
+			}
+		}
+		
+		Double IArithmetic<Double>.MaxValue {
+			get {
+				return Double.MaxValue;
+			}
+		}
+		
+		Double IArithmetic<Double>.MinValue {
+			get {
+				return Double.MinValue;
+			}
+		}
+		
+		Double IArithmetic<Double>.Zero {
+			get {
+				return (Single) 0.0d;
+			}
+		}
+		
+		Double IArithmetic<Double>.One {
+			get {
+				return (Single) 1.0d;
+			}
+		}
+		
+		Boolean IArithmetic<Double>.IsUnsigned {
+			get {
+				return false;
+			}
+		}
+		
+		Boolean IFloatingPointArithmetic<Double>.IsNaN {
+			get {
+				return IsNaN (m_value);
+			}
+		}
+		
+		Nullable<FloatingPointInfinity> IFloatingPointArithmetic<Double>.Infinity {
+			get {
+				if (IsPositiveInfinity (m_value))
+					return FloatingPointInfinity.PositiveInfinity;
+				else if (IsNegativeInfinity (m_value))
+					return FloatingPointInfinity.NegativeInfinity;
+				else
+					return null;
+			}
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Acos ()
+		{
+			return Math.Acos (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Asin ()
+		{
+			return Math.Asin (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Atan ()
+		{
+			return Math.Atan (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Atan2x (Double x)
+		{
+			return Math.Atan2 (m_value, x);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Atan2y (Double y)
+		{
+			return Math.Atan2 (y, m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Ceiling ()
+		{
+			return Math.Ceiling (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Cos ()
+		{
+			return Math.Cos (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Cosh ()
+		{
+			return Math.Cosh (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Exp ()
+		{
+			return Math.Exp (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Floor ()
+		{
+			return Math.Floor (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Log ()
+		{
+			return Math.Log (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Log10 ()
+		{
+			return Math.Log10 (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Pow (Double n)
+		{
+			return Math.Pow (m_value, n);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Round (int digits, MidpointRounding mode)
+		{
+			return Math.Round (m_value, digits, mode);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Sin ()
+		{
+			return Math.Sin (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Sinh ()
+		{
+			return Math.Sinh (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Tan ()
+		{
+			return Math.Tan (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Tanh ()
+		{
+			return Math.Tanh (m_value);
+		}
+		
+		Double IFloatingPointArithmetic<Double>.Truncate ()
+		{
+			return Math.Truncate (m_value);
 		}
 	}
 }

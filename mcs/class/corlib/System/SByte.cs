@@ -34,7 +34,7 @@ namespace System
 	[CLSCompliant(false)]
 	[Serializable]
 	[System.Runtime.InteropServices.ComVisible (true)]
-	public struct SByte : IFormattable, IConvertible, IComparable, IComparable<SByte>, IEquatable <SByte>
+	public struct SByte : IFormattable, IConvertible, IComparable, IComparable<SByte>, IEquatable <SByte>, IArithmetic <SByte>
 	{
 		public const sbyte MinValue = -128;
 		public const sbyte MaxValue = 127;
@@ -335,6 +335,87 @@ namespace System
 		ulong IConvertible.ToUInt64 (IFormatProvider provider)
 		{
 			return System.Convert.ToUInt64 (m_value);
+		}
+		
+		SByte IArithmetic<SByte>.Add (SByte addend)
+		{
+			return (SByte)(m_value + addend);
+		}
+		
+		SByte IArithmetic<SByte>.Subtract (SByte subtrahend)
+		{
+			return (SByte)(m_value - subtrahend);
+		}
+		
+		SByte IArithmetic<SByte>.Multiply (SByte multiplier)
+		{
+			return (SByte)(m_value * multiplier);
+		}
+		
+		SByte IArithmetic<SByte>.Divide (SByte divisor)
+		{
+			return (SByte)(m_value / divisor);
+		}
+		
+		SByte IArithmetic<SByte>.Negate ()
+		{
+			return (SByte)(-m_value);
+		}
+		
+		SByte IArithmetic<SByte>.Max (SByte other)
+		{
+			return (SByte) Math.Max (m_value, other);
+		}
+		
+		SByte IArithmetic<SByte>.Min (SByte other)
+		{
+			return (SByte) Math.Min (m_value, other);
+		}
+		
+		SByte IArithmetic<SByte>.Sqrt ()
+		{
+			return (SByte) Math.Sqrt (m_value);
+		}
+		
+		Nullable<ArithmeticSign> IArithmetic<SByte>.Sign {
+			get {
+				if (m_value > 0)
+					return ArithmeticSign.Positive;
+				else if (m_value == 0)
+					return ArithmeticSign.Zero;
+				else
+					return ArithmeticSign.Negative;
+			}
+		}
+		
+		SByte IArithmetic<SByte>.MaxValue {
+			get {
+				return SByte.MaxValue;
+			}
+		}
+		
+		SByte IArithmetic<SByte>.MinValue {
+			get {
+				return SByte.MinValue;
+			}
+		}
+		
+		SByte IArithmetic<SByte>.Zero {
+			get {
+				return (SByte) 0;
+			}
+		}
+		
+		SByte IArithmetic<SByte>.One {
+			get {
+				return (SByte) 1;
+			}
+		}
+		
+		Boolean IArithmetic<SByte>.IsUnsigned {
+			get {
+				return false;
+			}
 		}
 	}
 }
